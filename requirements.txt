@@ -18,7 +18,5 @@ djangorestframework>=3.14.0
 django-cors-headers>=4.2.0
 celery[redis]>=5.3.6
 redis>=5.0.3
-torch>=2.3.0
 boto3
 django-storages
-torchvision

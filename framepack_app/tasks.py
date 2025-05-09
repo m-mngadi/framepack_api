@@ -1,4 +1,16 @@
 from celery import shared_task
+import sys
+import os
+
+# Add FramePack directory to Python path
+frame_pack_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'FramePack'))
+if frame_pack_path not in sys.path:
+    sys.path.append(frame_pack_path)
+
+# Add project root directory to Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if project_root not in sys.path:
+    sys.path.append(project_root)
 from django.core.files.base import ContentFile
 import os
 import traceback
