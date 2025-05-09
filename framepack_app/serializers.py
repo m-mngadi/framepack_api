@@ -3,7 +3,7 @@ from .models import VideoGenerationTask
 from django.core.files.storage import default_storage
 
 class GenerateVideoSerializer(serializers.Serializer):
-    input_image = serializers.ImageField(required=True)
+    input_image = serializers.URLField(required=True)  # Changed to URLField
     prompt = serializers.CharField(required=True)
     n_prompt = serializers.CharField(default="")
     seed = serializers.IntegerField(default=31337)

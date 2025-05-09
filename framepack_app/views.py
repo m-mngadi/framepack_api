@@ -10,23 +10,19 @@ class GenerateVideoView(APIView):
     def post(self, request):
         serializer = GenerateVideoSerializer(data=request.data)
         if serializer.is_valid():
-            # Save uploaded image temporarily
-            input_image = request.FILES['input_image']
-            temp_image_path = f"/tmp/{input_image.name}"
-            with open(temp_image_path, 'wb+') as destination:
-                for chunk in input_image.chunks():
-                    destination.write(chunk)
-            
+            # Get image URL from request
+            input_image_url = serializer.validated_data['input_image']  # Changed to URL
+
             # Create task record
             task = VideoGenerationTask.objects.create(status='in_progress')
-            
+
             # Trigger Celery task
             generate_video_task.delay(
                 str(task.id),
-                temp_image_path,
+                input_image_url,  # Pass the URL
                 serializer.validated_data
             )
-            
+
             return Response({'task_id': str(task.id)}, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
