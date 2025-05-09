@@ -1,10 +1,11 @@
 # Dockerfile
 FROM nvidia/cuda:12.1-base
+RUN apt-get update && apt-get install -y python3-pip
 WORKDIR /app
 
-# Install dependencies
+# Copy requirements
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy project files
 COPY . .
